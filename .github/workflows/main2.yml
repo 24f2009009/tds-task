@@ -36,4 +36,5 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Show cache hit/miss
-        run: echo Cache hit status: ${{ steps.cache-step.outputs.cache-hit }}
+        run: |
+          echo "Cache hit status: ${{ steps.cache-step.outputs.cache-hit }}"
