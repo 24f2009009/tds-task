@@ -1,0 +1,39 @@
+name: Python Cache Dependencies
+
+on:
+  push:
+    branches:
+      - main  # trigger on push to main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"  # adjust if needed
+
+      - name: Prime cache cache-d32d4d3
+        id: cache-step
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: cache-d32d4d3
+          restore-keys: cache-d32d4d3
+
+      - name: Create virtual environment
+        run: python -m venv .venv
+
+      - name: Install dependencies
+        run: |
+          source .venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt || echo "No requirements.txt found"
+
+      - name: Show cache hit/miss
+        run: echo "Cache hit status: ${{ steps.cache-step.outputs.cache-hit }}"
