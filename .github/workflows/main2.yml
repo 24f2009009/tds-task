@@ -18,7 +18,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Prime cache cache-d32d4d3
+      - name: prime-cache-d32d4d3
         id: cache-step
         uses: actions/cache@v4
         with:
@@ -36,5 +36,4 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Show cache hit/miss
-        run: |
-          echo "Cache hit status: ${{ steps.cache-step.outputs.cache-hit }}"
+        run: echo Cache hit status: ${{ steps.cache-step.outputs.cache-hit }}
