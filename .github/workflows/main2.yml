@@ -3,7 +3,7 @@ name: Python Cache Dependencies
 on:
   push:
     branches:
-      - main  # trigger on push to main
+      - main
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"  # adjust if needed
+          python-version: "3.11"
 
       - name: Prime cache cache-d32d4d3
         id: cache-step
@@ -33,7 +33,8 @@ jobs:
         run: |
           source .venv/bin/activate
           pip install --upgrade pip
-          pip install -r requirements.txt || echo "No requirements.txt found"
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Show cache hit/miss
-        run: echo "Cache hit status: ${{ steps.cache-step.outputs.cache-hit }}"
+        run: |
+          echo "Cache hit status: ${{ steps.cache-step.outputs.cache-hit }}"
